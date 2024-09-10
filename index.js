@@ -178,9 +178,9 @@ app.post('/api/users/:_id/exercises',
     let id    = req.params._id;
     let desc  = req.body.description;
     let dur   = req.body.duration;
-    let date  = req.body.date;
+    let date  = req.body.date? req.body.date:new Date();
     
-    Alldata = dataManagement('load data');
+    Alldata = dataOrganize('load data');
     const errors = validationResult(req);
     
     if (!errors.isEmpty()) { res.json(errors) }
@@ -212,7 +212,7 @@ app.post('/api/users/:_id/exercises',
         dataOrganize('save data', user);
         return res.json ({
            _id : _id, username : username, date : date, 
-           duration: parseInt(dur), description : desc
+           duration: parseInt(dur), description : desc,
         });
       }
     }
